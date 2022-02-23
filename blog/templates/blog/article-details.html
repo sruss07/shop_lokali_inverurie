@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block page_header %}
+<div class="container header-container">
+    <div class="row">
+        <div class="col"></div>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="overlay"></div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col text-center mt-3">
+            <h2 class="logo-font">{{ post.title }}</h2>
+            <hr class="w-50 mb-1">
+        </div>
+    </div>
+
+
+    <div class="container mt-5">
+        <!-- Blog post details -->
+        <section class="text-justify">
+            <p class="font-weight-bold">{{ post.text|linebreaksbr }}</p>
+            <figure class="figure">
+                {% if post.image %}
+                <img class="figure-img img-fluid z-depth-1" src="{{ post.image.url }}" alt="{{ post.title }}" />
+                {% else %}
+                <img class="figure-img img-fluid z-depth-1" src="{{ MEDIA_URL }}noimage.jpg" alt="{{ post.title }}" />
+                {% endif %}
+            </figure>
+            <p>by <a><strong>{{ post.author }}</strong></a>,{{ post.published_date }}</p>
+            {% if request.user.is_superuser %}
+            <div class="text-center">
+                <a class="btn btn-outline-black rounded-0" href="{% url 'post_edit' pk=post.pk %}">Edit this Post</a>
+                <a class="btn btn-outline-black rounded-0" href="{% url 'post_remove' pk=post.pk %}">Delete this
+                    Post</a>
+            </div>
+            {% endif %}
+            <hr>
+        </section>
+
+        <!-- Comments -->
+        <div class="comments">
+            <h2 class="logo-font">Comments:</h2>
+            {% for comment in post.comments.all %}
+            {% if user.is_authenticated or comment.approved_comment %}
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">{{ comment.text|linebreaks }}</h4>
+                    <p class="card-text">Posted by:{{ comment.author }}</p>
+                    <div class="date">
+                        {{ comment.created_date }}
+                    </div>
+                    {% if request.user.is_superuser %}
+                    {% if not comment.approved_comment %}
+                    <a href="{% url 'comment_remove' pk=comment.pk %}" class="card-link">Remove Comment</a>
+                    <a href="{% url 'comment_approve' pk=comment.pk %}" class="card-link">Approve Comment</a>
+                    {% endif %}
+                    {% endif %}
+                </div>
+                {% endif %}
+                {% empty %}
+                <p>No comments here yet :(</p>
+                {% endfor %}
+            </div>
+            <a class="btn btn-outline-black rounded-0" href="{% url 'add_comment_to_post' pk=post.pk %}">Add a
+                Comment</a>
+            <a href="{% url 'post_list' %}" class="btn btn-outline-black rounded-0">
+                <span class="icon mr-2">
+                    <i class="fab fa-microblog"></i>
+                </span>
+                <span class="text-uppercase">Back to Blog List</span>
+            </a>
+        </div>
+
+    </div>
+
+</div>
+</div>
+</div>
+
+{% endblock %}
