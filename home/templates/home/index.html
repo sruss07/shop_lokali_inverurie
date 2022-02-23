@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block page_header %}
+    <div class="container header-container">
+        <div class="row">
+            <div class="col"></div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="landingsection container h-100">
+        <div class="row h-100">
+          <div class="col-md-12 mb-4 white-text text-center">
+              <!-- Landing Page and call to action -->
+            <h1 class="h1-reponsive white-text text-uppercase font-weight-bold mb-0 pt-md-5 pt-5"><strong>Shop Lokali?</strong></h1>
+            <hr class="hr-light my-4">
+            <a class="btn btn-outline-white" href="{% url 'products' %}">Shop Local</a>
+            <a class="btn btn-outline-white" href="{% url 'review_list' %}">Buy Local</a>
+            <a class="btn btn-outline-white" href="{% url 'post_list' %}">EV Delivered Local</a>
+          </div>
+        </div>
+</div>
+{% endblock %}
