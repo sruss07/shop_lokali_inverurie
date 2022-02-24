@@ -117,7 +117,7 @@ ACCOUNT_USERNAME_MIN_LENGTH = 4
 LOGIN_URL = '/accounts/login/'
 LOGIN_REDIRECT_URL = '/'
 
-WSGI_APPLICATION = 'shop-lokali-inverurie.wsgi.application'
+WSGI_APPLICATION = 'shop_lokali_inverurie.wsgi.application'
 
 
 # Database
