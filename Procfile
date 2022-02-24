@@ -1,1 +1,1 @@
-web: gunicorn shop_lokali_inverurie.wsgi:application
+web: gunicorn shop-lokali-inverurie.wsgi:application
